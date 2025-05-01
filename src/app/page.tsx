@@ -117,20 +117,42 @@ function CategoryTitle({ children }: { children: ReactNode }) {
 	return <h2 className="mt-4 -mb-2 text-xl underline">{children}</h2>;
 }
 
-function RecipeTitle({ item }: { item: { name: string; page?: number } }) {
+function RecipeTitle({ item, children }: { item: { name: string; page?: number }; children?: ReactNode }) {
 	return (
 		<h3 className="mt-3">
-			<span>{item.name}</span>
+			{children ?? <span>{item.name}</span>}
 			{typeof item.page === 'number' ? ` (page ${item.page})` : ''}
 		</h3>
 	);
 }
 
-function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings)[0]; onBack: () => void }) {
+function DressingPage({
+	dressing,
+	onBack,
+	onSelect,
+}: {
+	dressing: (typeof mandys.dressings)[0];
+	onBack: () => void;
+	onSelect: (value: string) => void;
+}) {
 	const { salads = [], bowls = [], dressings = [] } = dressingMap[dressing.name] || {};
 
+	const handleDressingClick = (e: React.MouseEvent, dressingName: string) => {
+		e.preventDefault();
+		onSelect(dressingName);
+	};
+
+	const DressingLink = ({ name }: { name: string }) => (
+		<button
+			onClick={e => handleDressingClick(e, name)}
+			className="text-blue-600 hover:text-blue-800 hover:underline"
+		>
+			{name}
+		</button>
+	);
+
 	return (
-		<div className="relative flex flex-col items-center justify-center min-h-screen p-4 font-serif">
+		<div className="relative flex flex-col items-center min-h-screen p-4 pt-16 font-serif">
 			<Button variant="ghost" size="icon" className="absolute top-4 left-4" onClick={onBack}>
 				<ArrowLeft className="w-8 h-8" />
 				<span className="sr-only">Back</span>
@@ -149,8 +171,23 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 									{salad.additionalDressings && (
 										<p className="italic">
 											Requires additional dressings
-											{additionalDressings?.length ? ` (${additionalDressings.join(', ')})` : ''}.
-											See {parentDressing.name}, page {parentDressing.page}.
+											{additionalDressings?.length ? (
+												<>
+													{' '}
+													(
+													{additionalDressings.map((name, i) => (
+														<Fragment key={name}>
+															{i > 0 && ', '}
+															<DressingLink name={name} />
+														</Fragment>
+													))}
+													)
+												</>
+											) : (
+												''
+											)}
+											. See <DressingLink name={parentDressing.name} />, page{' '}
+											{parentDressing.page}.
 										</p>
 									)}
 								</Fragment>
@@ -170,8 +207,23 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 									{bowl.additionalDressings && (
 										<p className="italic">
 											Requires additional dressings
-											{additionalDressings?.length ? ` (${additionalDressings.join(', ')})` : ''}.
-											See {parentDressing.name}, page {parentDressing.page}.
+											{additionalDressings?.length ? (
+												<>
+													{' '}
+													(
+													{additionalDressings.map((name, i) => (
+														<Fragment key={name}>
+															{i > 0 && ', '}
+															<DressingLink name={name} />
+														</Fragment>
+													))}
+													)
+												</>
+											) : (
+												''
+											)}
+											. See <DressingLink name={parentDressing.name} />, page{' '}
+											{parentDressing.page}.
 										</p>
 									)}
 								</Fragment>
@@ -183,7 +235,9 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 					<>
 						<CategoryTitle>Dressings</CategoryTitle>
 						{dressings.map(dressing => (
-							<RecipeTitle item={dressing} key={dressing.name} />
+							<RecipeTitle item={dressing} key={dressing.name}>
+								<DressingLink name={dressing.name} />
+							</RecipeTitle>
 						))}
 					</>
 				)}
@@ -192,35 +246,23 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 	);
 }
 
-export default function AutocompletePage() {
+function SearchPage({ onSelect, value }: { onSelect: (value: string) => void; value: string | null }) {
 	const [open, setOpen] = useState(false);
-	const [value, setValue] = useState('');
-	const [submitted, setSubmitted] = useState(false);
 
 	const handleSelect = (currentValue: string) => {
-		setValue(currentValue === value ? '' : currentValue);
 		setOpen(false);
-		setSubmitted(true);
+		onSelect(currentValue);
 	};
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (value) {
-			setSubmitted(true);
+			onSelect(value);
 		}
 	};
 
-	const handleBack = () => {
-		setSubmitted(false);
-		setValue('');
-	};
-
-	if (submitted) {
-		return <DressingPage onBack={handleBack} dressing={dressingsByName[value]} />;
-	}
-
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen p-4">
+		<div className="flex flex-col items-center min-h-screen p-4 pt-16">
 			<form onSubmit={handleSubmit} className="w-full max-w-3xl">
 				<Popover open={open} onOpenChange={setOpen}>
 					<PopoverTrigger asChild>
@@ -270,3 +312,35 @@ export default function AutocompletePage() {
 		</div>
 	);
 }
+
+function App() {
+	const [selectedDressing, setSelectedDressing] = useState<string | null>(null);
+	const [history, setHistory] = useState<string[]>([]);
+
+	const handleSelect = (value: string) => {
+		if (selectedDressing) {
+			setHistory(prev => [...prev, selectedDressing]);
+		}
+		setSelectedDressing(value);
+	};
+
+	const handleBack = () => {
+		if (history.length > 0) {
+			const previousDressing = history[history.length - 1];
+			setHistory(prev => prev.slice(0, -1));
+			setSelectedDressing(previousDressing);
+		} else {
+			setSelectedDressing(null);
+		}
+	};
+
+	if (selectedDressing) {
+		return (
+			<DressingPage onBack={handleBack} dressing={dressingsByName[selectedDressing]} onSelect={handleSelect} />
+		);
+	}
+
+	return <SearchPage onSelect={handleSelect} value={selectedDressing} />;
+}
+
+export default App;
