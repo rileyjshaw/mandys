@@ -120,7 +120,7 @@ function RecipeTitle({ item, children }: { item: { name: string; page?: number }
 	return (
 		<h3 className="mt-3">
 			{children ?? <span>{item.name}</span>}
-			{typeof item.page === 'number' ? ` (page ${item.page})` : ''}
+			{typeof item.page === 'number' ? `, page ${item.page}.` : ''}
 		</h3>
 	);
 }
