@@ -151,7 +151,7 @@ function DressingPage({
 	);
 
 	return (
-		<div className="relative flex flex-col min-h-screen p-4 pt-16 font-serif">
+		<div className="relative flex flex-col min-h-dvh p-4 pt-16 font-serif">
 			<Button variant="ghost" size="icon" className="absolute top-4 left-1" onClick={onBack}>
 				<ArrowLeft className="w-8 h-8" />
 				<span className="sr-only">Back</span>
@@ -261,7 +261,7 @@ function SearchPage({ onSelect, value }: { onSelect: (value: string) => void; va
 	};
 
 	return (
-		<div className="flex flex-col items-center min-h-screen p-4 pt-16">
+		<div className="flex flex-col items-center min-h-dvh p-4 pt-16">
 			<form onSubmit={handleSubmit} className="w-9/10 max-w-3xl">
 				<Popover open={open} onOpenChange={setOpen}>
 					<PopoverTrigger asChild>
