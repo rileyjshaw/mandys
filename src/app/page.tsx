@@ -1,11 +1,10 @@
 import type React from 'react';
 
 import { Fragment, ReactNode, useState } from 'react';
-import { ArrowLeft, Check, ChevronsUpDown } from 'lucide-react';
+import { ArrowLeft, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { cn } from '@/lib/utils';
 
 import mandys from '@/data/mandys.json';
 
@@ -152,7 +151,7 @@ function DressingPage({
 	);
 
 	return (
-		<div className="relative flex flex-col items-center min-h-screen p-4 pt-16 font-serif">
+		<div className="relative flex flex-col min-h-screen p-4 pt-16 font-serif">
 			<Button variant="ghost" size="icon" className="absolute top-4 left-1" onClick={onBack}>
 				<ArrowLeft className="w-8 h-8" />
 				<span className="sr-only">Back</span>
@@ -291,12 +290,6 @@ function SearchPage({ onSelect, value }: { onSelect: (value: string) => void; va
 											onSelect={handleSelect}
 											className="text-3xl py-3 cursor-pointer"
 										>
-											<Check
-												className={cn(
-													'mr-2 h-6 w-6',
-													value === option.value ? 'opacity-100' : 'opacity-0'
-												)}
-											/>
 											{option.label}
 										</CommandItem>
 									))}
