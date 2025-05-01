@@ -153,7 +153,7 @@ function DressingPage({
 
 	return (
 		<div className="relative flex flex-col items-center min-h-screen p-4 pt-16 font-serif">
-			<Button variant="ghost" size="icon" className="absolute top-4 left-4" onClick={onBack}>
+			<Button variant="ghost" size="icon" className="absolute top-4 left-1" onClick={onBack}>
 				<ArrowLeft className="w-8 h-8" />
 				<span className="sr-only">Back</span>
 			</Button>
@@ -263,22 +263,22 @@ function SearchPage({ onSelect, value }: { onSelect: (value: string) => void; va
 
 	return (
 		<div className="flex flex-col items-center min-h-screen p-4 pt-16">
-			<form onSubmit={handleSubmit} className="w-full max-w-3xl">
+			<form onSubmit={handleSubmit} className="w-9/10 max-w-3xl">
 				<Popover open={open} onOpenChange={setOpen}>
 					<PopoverTrigger asChild>
 						<Button
 							variant="outline"
 							role="combobox"
 							aria-expanded={open}
-							className="w-full justify-between text-5xl p-6 h-auto font-normal"
+							className="w-full justify-between md:text-5xl text-3xl p-4 md:p-6 h-auto font-normal"
 						>
 							{value
 								? dressingOptions.find(option => option.value === value)?.label
 								: 'Select a dressing…'}
-							<ChevronsUpDown className="ml-2 shrink-0 opacity-50 w-8! h-8!" />
+							<ChevronsUpDown className="ml-2 shrink-0 opacity-50 w-6! md:w-8! h-6! md:h-8!" />
 						</Button>
 					</PopoverTrigger>
-					<PopoverContent className="w-full p-0" style={{ width: 'calc(100% - 2rem)' }}>
+					<PopoverContent className="w-8/10 mt-2 mx-auto p-0">
 						<Command className="w-full">
 							<CommandInput placeholder="Search options..." className="text-3xl h-14" />
 							<CommandList>
