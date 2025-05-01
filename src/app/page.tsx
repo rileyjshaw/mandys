@@ -113,12 +113,12 @@ const dressingOptions = usedDressings.map(dressing => ({
 }));
 
 function CategoryTitle({ children }: { children: ReactNode }) {
-	return <h2 className="mt-4 -mb-2 text-xl underline">{children}</h2>;
+	return <h2 className="mt-6 text-xl underline">{children}</h2>;
 }
 
 function RecipeTitle({ item, children }: { item: { name: string; page?: number }; children?: ReactNode }) {
 	return (
-		<h3 className="mt-3">
+		<h3 className="mt-2">
 			{children ?? <span>{item.name}</span>}
 			{typeof item.page === 'number' ? `, page ${item.page}.` : ''}
 		</h3>
@@ -157,7 +157,21 @@ function DressingPage({
 				<span className="sr-only">Back</span>
 			</Button>
 			<div>
-				<h1 className="text-3xl">{dressing.name} Dressing</h1>
+				<header className="mb-6">
+					<h1 className="text-3xl">{dressing.name} Dressing</h1>
+					{dressing.components && (
+						<p className="italic">
+							This dressing is a combination of other dressings. It contains{' '}
+							{dressing.components.map((name, i) => (
+								<Fragment key={name}>
+									{i === 0 ? null : i === dressing.components.length - 1 ? ', and ' : ', '}
+									<DressingLink name={name} />
+								</Fragment>
+							))}
+							.
+						</p>
+					)}
+				</header>
 				{!!salads.length && (
 					<>
 						<CategoryTitle>Salads</CategoryTitle>
