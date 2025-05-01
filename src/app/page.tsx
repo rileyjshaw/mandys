@@ -114,13 +114,13 @@ const dressingOptions = usedDressings.map(dressing => ({
 }));
 
 function CategoryTitle({ children }: { children: ReactNode }) {
-	return <h2 className="mt-4 -mb-2 text-xl font-bold">{children}</h2>;
+	return <h2 className="mt-4 -mb-2 text-xl underline">{children}</h2>;
 }
 
 function RecipeTitle({ item }: { item: { name: string; page?: number } }) {
 	return (
 		<h3 className="mt-3">
-			<span className="font-bold">{item.name}</span>
+			<span>{item.name}</span>
 			{typeof item.page === 'number' ? ` (page ${item.page})` : ''}
 		</h3>
 	);
@@ -136,7 +136,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 				<span className="sr-only">Back</span>
 			</Button>
 			<div>
-				<h1 className="text-3xl font-bold">{dressing.name} Dressing</h1>
+				<h1 className="text-3xl">{dressing.name} Dressing</h1>
 				{!!salads.length && (
 					<>
 						<CategoryTitle>Salads</CategoryTitle>
@@ -148,7 +148,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 									<RecipeTitle item={salad} />
 									{salad.additionalDressings && (
 										<p className="italic">
-											Note: requires additional dressings
+											Requires additional dressings
 											{additionalDressings?.length ? ` (${additionalDressings.join(', ')})` : ''}.
 											See {parentDressing.name}, page {parentDressing.page}.
 										</p>
@@ -169,7 +169,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 									<RecipeTitle item={bowl} />
 									{bowl.additionalDressings && (
 										<p className="italic">
-											Note: requires additional dressings
+											Requires additional dressings
 											{additionalDressings?.length ? ` (${additionalDressings.join(', ')})` : ''}.
 											See {parentDressing.name}, page {parentDressing.page}.
 										</p>
