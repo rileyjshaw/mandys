@@ -277,18 +277,20 @@ function SearchPage({ onSelect, value }: { onSelect: (value: string) => void; va
 							<ChevronsUpDown className="ml-2 shrink-0 opacity-50 w-6! md:w-8! h-6! md:h-8!" />
 						</Button>
 					</PopoverTrigger>
-					<PopoverContent className="w-8/10 mt-2 mx-auto p-0">
+					<PopoverContent className="w-full mt-2 mx-auto p-0">
 						<Command className="w-full">
-							<CommandInput placeholder="Search options..." className="text-3xl h-14" />
+							<CommandInput placeholder="Search options…" className="text-lg md:text-3xl h-14" />
 							<CommandList>
-								<CommandEmpty className="text-3xl py-6 text-center">No options found.</CommandEmpty>
+								<CommandEmpty className="text-lg md:text-3xl py-6 text-center">
+									No options found.
+								</CommandEmpty>
 								<CommandGroup>
 									{dressingOptions.map(option => (
 										<CommandItem
 											key={option.value}
 											value={option.value}
 											onSelect={handleSelect}
-											className="text-3xl py-3 cursor-pointer"
+											className="text-lg md:text-3xl py-1 md:py-3 cursor-pointer"
 										>
 											{option.label}
 										</CommandItem>
