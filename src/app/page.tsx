@@ -1,6 +1,6 @@
 import type React from 'react';
 
-import { ReactNode, useState } from 'react';
+import { Fragment, ReactNode, useState } from 'react';
 import { ArrowLeft, Check, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -130,7 +130,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 	const { salads = [], bowls = [], dressings = [] } = dressingMap[dressing.name] || {};
 
 	return (
-		<div className="relative flex flex-col items-center justify-center min-h-screen p-4">
+		<div className="relative flex flex-col items-center justify-center min-h-screen p-4 font-serif">
 			<Button variant="ghost" size="icon" className="absolute top-4 left-4" onClick={onBack}>
 				<ArrowLeft className="w-8 h-8" />
 				<span className="sr-only">Back</span>
@@ -144,7 +144,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 							const parentDressing = dressingsByName[salad.additionalDressings?.name ?? ''];
 							const additionalDressings = salad.additionalDressings?.components;
 							return (
-								<>
+								<Fragment key={salad.name}>
 									<RecipeTitle item={salad} />
 									{salad.additionalDressings && (
 										<p className="italic">
@@ -153,7 +153,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 											See {parentDressing.name}, page {parentDressing.page}.
 										</p>
 									)}
-								</>
+								</Fragment>
 							);
 						})}
 					</>
@@ -165,7 +165,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 							const parentDressing = dressingsByName[bowl.additionalDressings?.name ?? ''];
 							const additionalDressings = bowl.additionalDressings?.components;
 							return (
-								<>
+								<Fragment key={bowl.name}>
 									<RecipeTitle item={bowl} />
 									{bowl.additionalDressings && (
 										<p className="italic">
@@ -174,7 +174,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 											See {parentDressing.name}, page {parentDressing.page}.
 										</p>
 									)}
-								</>
+								</Fragment>
 							);
 						})}
 					</>
@@ -183,7 +183,7 @@ function DressingPage({ dressing, onBack }: { dressing: (typeof mandys.dressings
 					<>
 						<CategoryTitle>Dressings</CategoryTitle>
 						{dressings.map(dressing => (
-							<RecipeTitle item={dressing} />
+							<RecipeTitle item={dressing} key={dressing.name} />
 						))}
 					</>
 				)}
@@ -228,7 +228,7 @@ export default function AutocompletePage() {
 							variant="outline"
 							role="combobox"
 							aria-expanded={open}
-							className="w-full justify-between text-5xl p-6 pt-8 h-auto font-normal"
+							className="w-full justify-between text-5xl p-6 h-auto font-normal"
 						>
 							{value
 								? dressingOptions.find(option => option.value === value)?.label

@@ -15,9 +15,24 @@
 	font-style: italic;
 }
 
+@font-face {
+	font-family: 'Cabrio';
+	src: url('./assets/fonts/CabrioWeb-Light.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Cabrio';
+	src: url('./assets/fonts/CabrioWeb-LightItalic.woff2') format('woff2');
+	font-weight: 400;
+	font-style: italic;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+	--font-sans: Cabrio, serif;
 	--font-serif: Warbler, serif;
 
 	--radius-sm: calc(var(--radius) - 4px);
@@ -131,6 +146,6 @@
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background text-foreground font-serif;
+		@apply bg-background text-foreground;
 	}
 }
