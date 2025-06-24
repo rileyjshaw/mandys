@@ -48,10 +48,10 @@
 		{ "page": 181, "name": "Bún Bowl", "dressing": "Endless Summer" },
 		{ "page": 182, "name": "Ramen Chicken Peanut Bowl", "dressing": "Lime Chili Thai" },
 		{ "page": 189, "name": "Seoul Bowl", "dressing": "No" },
-		{ "page": 192, "name": "Burrito Bowi", "dressing": "No" },
+		{ "page": 192, "name": "Burrito Bowl", "dressing": "No" },
 		{ "page": 195, "name": "Pearl Pesto Bowl", "dressing": "Pesto" },
 		{ "page": 196, "name": "Pumpui Bowl", "dressing": "Épicerie Pumpui" },
-		{ "page": 199, "name": "Caprese Bowi", "dressing": "Italian Summer" }
+		{ "page": 199, "name": "Caprese Bowl", "dressing": "Italian Summer" }
 	],
 	"dressings": [
 		{ "page": 155, "name": "Mandy’s House" },
